@@ -11,13 +11,12 @@ var util = require('lang-utils');
 // 分析依赖列表
 
 module.exports = new astro.Middleware({
-    // modType: ['jsCom'],
     fileType: 'js'
 }, function(asset, next) {
     if(!asset.data){
         asset.data = asset.read();
     }
-    if(asset.data){
+    if(asset.data &&  asset.modType != 'static'){
     asset.data = 'define(' + (asset.modType == 'jsCom'?JSON.stringify(asset.name)+ ', ':'')
         +'function(require, module, exports){\n' + asset.data + '\n})';
     }
