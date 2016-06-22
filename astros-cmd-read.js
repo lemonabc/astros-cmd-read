@@ -7,9 +7,6 @@ var nodeUtil = require('util');
 
 var util = require('lang-utils');
 
-// 支持CMD
-// 分析依赖列表
-
 module.exports = new astro.Middleware({
     fileType: 'js'
 }, function(asset, next) {
@@ -18,7 +15,7 @@ module.exports = new astro.Middleware({
     }
     if(asset.data &&  asset.modType != 'static'){
     asset.data = 'define(' + (asset.modType == 'jsCom'?JSON.stringify(asset.name)+ ', ':'')
-        +'function(require, module, exports){\n' + asset.data + '\n})';
+        +'function(require, module, exports){\n' + asset.data + '\n});';
     }
     next(asset);
 });
